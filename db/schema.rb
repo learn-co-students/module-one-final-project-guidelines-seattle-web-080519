@@ -34,6 +34,18 @@ ActiveRecord::Schema.define(version: 20190821223901) do
     t.index [nil, nil], name: "index_events_users_on_events_id_and_users_id"
   end
 
+  create_table "eventusers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_eventusers_on_event_id"
+    t.index ["user_id"], name: "index_eventusers_on_user_id"
+  end
+
+  create_table "user_events", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "event_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string  "name"
     t.integer "phase"
