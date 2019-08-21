@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
     has_many :children
-    has_many :events, :through => :user_event
+    has_many :events, :through => :users_event
     
     
     #method addsubresources
@@ -44,13 +44,29 @@ class User < ActiveRecord::Base
          #method addsubresources
         case dificulty
         when "hard"
-            phase += rand(1..3)
+            hard_earnings = rand(1..3)
+            self.resources += hard_earnings
+            self.resources -= 1
+            puts "you earned $#{hard_earnings}"
+            puts "you lost $1"
         when "average"
-            phase += rand(4..15)
+            average_earnings = rand(4..15)
+            self.resources += average_earnings
+            self.resources -= 4
+            puts "you earned $#{average_earnings}"
+            puts "you lost $4"
         when "easy"
-            phase += rand(16..31)
+            easy_earnings = rand(16..31)
+            self.resources += easy_earnings
+            self.resources -= 16
+            puts "you earned $#{easy_earnings}"
+            puts "you lost $16"
         when "super easy"
-            phase += rand(32..500)
+            money = rand(32..500)
+            self.resources += money
+            self.resources -= 32
+            puts "you earned $#{money}"
+            puts "you lost $32"
         end
     end
 end
