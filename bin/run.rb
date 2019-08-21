@@ -1,12 +1,14 @@
 require_relative '../config/environment'
-# puts "ARE YOU READY TO BE BORN?"
-# puts "What is your name?"
-# username = gets.chomp
-# username = User.create #take out username crzy characters
-# username.name = name
+puts "ARE YOU READY TO BE BORN?"
+puts "how easy is your life goin to be"
+dificulty = gets.chomp
+puts "What is your name?"
+username = gets.chomp
+new_user = User.create_user(username, dificulty) #take out username crzy characters
+# new_user.status_report
 
 
-# puts "phase 1"
+new_user.age_range # puts "phase 1"
 
 # #start loop
 # def game_loops
