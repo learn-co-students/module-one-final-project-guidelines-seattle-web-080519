@@ -1,4 +1,5 @@
-require
+require_relative '../config/environment'
+
 Brewery.create(name: "Brew1", location: "Seattle", url: "www.brew1.com")
 Brewery.create(name: "Brew2", location: "Seattle", url: "www.brew2.com")
 Brewery.create(name: "Brew3", location: "Seattle", url: "www.brew3.com")
