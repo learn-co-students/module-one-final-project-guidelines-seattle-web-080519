@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
     has_many :children
-    has_many :events, :through => :users_event
+    has_many :eventusers
+    has_many :events, :through => :eventusers
     
     
     #method addsubresources
@@ -44,27 +45,27 @@ class User < ActiveRecord::Base
          #method addsubresources
         case dificulty
         when "hard"
-            hard_earnings = rand(1..3)
+            hard_earnings = (rand(1..3) - 1)
             self.resources += hard_earnings
-            self.resources -= 1
+            self.save
             puts "you earned $#{hard_earnings}"
             puts "you lost $1"
         when "average"
-            average_earnings = rand(4..15)
+            average_earnings = (rand(4..15) - 4)
             self.resources += average_earnings
-            self.resources -= 4
+            self.save
             puts "you earned $#{average_earnings}"
             puts "you lost $4"
         when "easy"
             easy_earnings = rand(16..31)
-            self.resources += easy_earnings
-            self.resources -= 16
+            self.resources += (easy_earnings - 16)
+            self.save
             puts "you earned $#{easy_earnings}"
             puts "you lost $16"
         when "super easy"
-            money = rand(32..500)
+            money = (rand(32..500) - 32)
             self.resources += money
-            self.resources -= 32
+            self.save
             puts "you earned $#{money}"
             puts "you lost $32"
         end
