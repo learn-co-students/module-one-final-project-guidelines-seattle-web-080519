@@ -10,26 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20190820221315) do
+ActiveRecord::Schema.define(version: 20190821014144) do
 
   create_table "children", force: :cascade do |t|
     t.string  "name"
     t.boolean "alive"
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string  "name"
-    t.integer "phase"
-    t.integer "wellness_score"
-    t.integer "resources"
-=======
-ActiveRecord::Schema.define(version: 20190820221202) do
-
   create_table "events", force: :cascade do |t|
     t.string  "name"
     t.string  "definition"
     t.integer "cost"
+    t.integer "low_chance_damage"
+    t.integer "high_chance_damage"
     t.integer "damage"
   end
 
@@ -37,7 +30,13 @@ ActiveRecord::Schema.define(version: 20190820221202) do
     t.integer "event_id", null: false
     t.integer "user_id",  null: false
     t.index [nil, nil], name: "index_events_users_on_events_id_and_users_id"
->>>>>>> a408e6406d5354037261f00fd780a5cf1b8608fa
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string  "name"
+    t.integer "phase"
+    t.integer "wellness_score"
+    t.integer "resources"
   end
 
 end
