@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190820221315) do
+ActiveRecord::Schema.define(version: 20190821014144) do
 
   create_table "children", force: :cascade do |t|
     t.string  "name"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20190820221315) do
     t.string  "name"
     t.string  "definition"
     t.integer "cost"
+    t.integer "low_chance_damage"
+    t.integer "high_chance_damage"
     t.integer "damage"
   end
 
