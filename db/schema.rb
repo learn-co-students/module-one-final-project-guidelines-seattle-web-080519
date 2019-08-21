@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190821014144) do
+ActiveRecord::Schema.define(version: 20190821223901) do
 
   create_table "children", force: :cascade do |t|
     t.string  "name"
     t.boolean "alive"
+    t.integer "user_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -24,6 +25,7 @@ ActiveRecord::Schema.define(version: 20190821014144) do
     t.integer "low_chance_damage"
     t.integer "high_chance_damage"
     t.integer "damage"
+    t.string  "event_type"
   end
 
   create_table "events_users", id: false, force: :cascade do |t|
