@@ -107,16 +107,16 @@ end
             user.resources -= event.cost
             user.save
             if rand(100) >= event.low_chance_damage
-                puts "your survived #{event.name}"
+                puts "You survived #{event.name}"
             else
-                puts "you're wellness dropped by #{event.damage}."
+                puts "Your wellness dropped by #{event.damage}."
                 user.wellness_score -= event.damage
             end
         else
             if rand(100) >= event.high_chance_damage
-                puts "your survived #{event.name}"
+                puts "You survived #{event.name}"
             else
-                puts "you're wellness dropped by #{event.damage}."
+                puts "Your wellness dropped by #{event.damage}."
                 user.wellness_score -= event.damage
             end
     end
