@@ -12,6 +12,9 @@ def do_you_want_to_continue
     input = gets.chomp
     if input == "n"
         puts "you gave up on life and family"
-        $dead = true
+        @dead = true
     end
+end
+def s(f) 
+    sleep f
 end
