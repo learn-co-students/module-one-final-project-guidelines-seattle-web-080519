@@ -45,29 +45,41 @@ class User < ActiveRecord::Base
          #method addsubresources
         case difficulty
         when "1"
-            hard_earnings = (rand(1..3) - 1)
-            self.resources += hard_earnings
+            hard_earnings = (rand(1..3))
+            self.resources += (hard_earnings - 1)
             self.save
+            tension
             puts "You earned $#{hard_earnings}."
             puts "You lost $1 for living expenses."
+            puts "You currently have $#{self.resources}."
+            tension
         when "2"
-            average_earnings = (rand(4..15) - 4)
-            self.resources += average_earnings
+            average_earnings = (rand(4..15))
+            self.resources += (average_earnings - 4)
             self.save
+            tension
             puts "You earned $#{average_earnings}."
             puts "You lost $4 for living expenses."
+            puts "You currently have $#{self.resources}."
+            tension
         when "3"
             easy_earnings = rand(16..31)
             self.resources += (easy_earnings - 16)
             self.save
+            tension
             puts "You earned $#{easy_earnings}"
             puts "You lost $16 for living expenses."
+            puts "You currently have $#{self.resources}."
+            tension
         when "4"
             money = (rand(32..500) - 32)
             self.resources += money
             self.save
+            tension
             puts "You earned $#{money}"
             puts "You lost $32 for living expenses."
+            puts "You currently have $#{self.resources}."
+            tension
         end
     end
 end

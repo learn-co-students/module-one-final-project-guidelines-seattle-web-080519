@@ -26,9 +26,22 @@ puts "Welcome to the world, #{username}!"
 new_user = User.create_user(username, difficulty) #take out username crzy characters
 s(1)
 
-puts "The world has four income levels, and you are born into a country on Level 1. About 1 billion of your fellow humans live on this level; that's 9% of the world's population. (While that's still too many people struggling, that's a huge improvement: in 1966, 50% of the world was on Level 1.)"
-puts ""
-puts "Most people in your country survive on under $2 a day. As a child, you will walk barefoot to a mudhole to collect water for your family using your single plastic bucket. On your way home you'll gather firewood to heat the gray porridge that you eat at every meal."
+# print "The world has four income levels, and you are born into a country on Level 1. "
+# s(1)
+# print "About 1 billion of your fellow humans live on this level; "
+# s(1)
+# print "that's 9% of the world's population."
+# s(1)
+# print "(While that's still too many people struggling, that's a huge improvement: "
+# s(1)
+# puts "in 1966, 50% of the world was on Level 1.) "
+# s(1)
+# puts ""
+# print "Most people in your country survive on under $2 a day. "
+# s(1)
+# print "As a child, you will walk barefoot to a mudhole to collect water for your family using your single plastic bucket. "
+# s(1)
+# puts "On your way home you'll gather firewood to heat the gray porridge that you eat at every meal. "
 
 tension
 
@@ -48,7 +61,7 @@ tension
         Event.event_occurs(new_user)
         Event.event_choice(new_user)
         survived_phase(new_user)
-        # system 'clear'
+        break if @dead == true
     end
     if @dead == true
         puts "Game over!"

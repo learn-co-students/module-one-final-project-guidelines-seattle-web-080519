@@ -22,14 +22,16 @@ def tension
     s(1)
 end
 def survived_phase(user) 
-    if user.wellness_score < 1
-        dead = true
-        return dead
+    if user.wellness_score < 45
+        @dead = true
+        return @dead
     else 
         puts "You have survived phase #{user.phase}." 
         user.phase += 1
+        tension
     end
 end
+
 def do_you_want_to_continue
     puts "Do you want to keep playing?"
     input = gets.chomp

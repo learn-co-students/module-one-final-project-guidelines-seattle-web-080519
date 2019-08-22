@@ -18,15 +18,15 @@
         # Malaria
             # 43%
             # 13%
-            sick_malaria = Event.create(:name => "user sick: malaria", :definition => "You've contracted malaria.", :cost => 1, :low_chance_damage => 13, :high_chance_damage => 43, :damage => 2, :event_type => "user sick")
+            sick_malaria = Event.create(:name => "user sick: malaria", :definition => "You've contracted malaria.", :cost => 1, :low_chance_damage => 13, :high_chance_damage => 43, :damage => 20, :event_type => "user sick")
         # HIV
             # 90%
             # 40%
-            sick_hiv = Event.create(:name => "user sick: HIV", :definition => "You've contracted HIV.", :cost => 3, :low_chance_damage => 40, :high_chance_damage => 90, :damage => 5, :event_type => "user sick")
+            sick_hiv = Event.create(:name => "user sick: HIV", :definition => "You've contracted HIV.", :cost => 3, :low_chance_damage => 40, :high_chance_damage => 90, :damage => 50, :event_type => "user sick")
         # Other infection
             # 80%
             # 10%
-            sick_infection = Event.create(:name => "user sick: infection", :definition => "You have an infection.", :cost => 1, :low_chance_damage => 10, :high_chance_damage => 80, :damage => 1, :event_type => "user sick")
+            sick_infection = Event.create(:name => "user sick: infection", :definition => "You have an infection.", :cost => 1, :low_chance_damage => 10, :high_chance_damage => 80, :damage => 10, :event_type => "user sick")
   # group 3:
     # Child gets sick
         # Malaria
@@ -50,7 +50,7 @@
         # Drought
             # 100%
             # 100%
-            drought = Event.create(:name => "drought", :definition => "There's a drough that has dried out your well; you'll need to purchase water.", :cost => 3, :low_chance_damage => 100, :high_chance_damage => 100, :damage => nil, :event_type => "resource damage")
+            drought = Event.create(:name => "drought", :definition => "There's a drought that has dried out your well; you'll need to purchase water.", :cost => 3, :low_chance_damage => 100, :high_chance_damage => 100, :damage => nil, :event_type => "resource damage")
         # Home Repairs
             # 100%
             # 100%

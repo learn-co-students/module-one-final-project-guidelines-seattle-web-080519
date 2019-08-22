@@ -61,7 +61,7 @@ class Event < ActiveRecord::Base
         else
             puts "Error: Phase is not within range."
         end
-        @phase_event = self.random_user_illness
+        # @phase_event = self.random_resource_damage
     end
     # user makes a choice
     # def eventchoice(event_instance)
@@ -79,83 +79,78 @@ class Event < ActiveRecord::Base
             child_object = Child.create(name: child_name, alive: true, user_id: user.id)
         elsif self.group_user_sick.include?(@phase_event)
             puts @phase_event.definition
+            s(1)
             puts "You may purchase medicine for $#{@phase_event.cost}."
-            puts "You currently have $#{user.resources}"
-            puts "Without medicine, your survival rate is #{@phase_event.high_chance_damage}"
-            puts "With medicine, your survival rate is #{@phase_event.low_chance_damage}%" 
+            s(1)
+            puts "You currently have $#{user.resources}."
+            s(1)
+            puts "Without medicine, your survival rate is #{@phase_event.high_chance_damage}%."
+            s(1)
+            puts "With medicine, your survival rate is #{@phase_event.low_chance_damage}%."
+            s(1)
             puts "Would you like to purchase the medicine?"
+            s(1)
             puts "Type Y for Yes or N for No"
             user_response = gets.chomp
             user_response = user_response.downcase!
-            choice(user_response,user,@phase_event)
-                # puts "Your code is broken within the Event.event_choice(user) method under elsif self.group_user_sick."
-        # elsif self.group_child_sick.include?(@phase_event)
-        # elsif self.group_resource_damage.include?(@phase_event)
+            @phase_event.choice(user_response, user)
+        elsif self.group_resource_damage.include?(@phase_event)
+            puts @phase_event.definition
+            s(1)
+            puts "You must purchase supplies for $#{@phase_event.cost}."
+            s(1)
+            puts "You currently have $#{user.resources}."
+            s(1)
+            @phase_event.resource_choice(user)
         else
             puts "Your event object can't be found; broken within Event class method event_choice."
         end
     end
-end
-        # If Group 1
-            # User asked to name child
-            # Create child
-        # If Group 2:
-            # Get user's input if they want medicine to lower the damage rate
-    def choice(choose,user,event)
-        # Eventuser.new({user_id: user.id, event_id: event.id})
-        if choose == "y" && user.resources > event.cost
-            user.resources -= event.cost
+
+    def resource_choice(user)
+        users_choice = "NO!"
+        
+        while users_choice != "y"
+            
+            puts "Type Y to continue."
+            users_choice = gets.chomp
+            # users_choice.downcase!
+        #     users_choice = gets_choice
+            # break if users_choice == "y"
+        end
+        user.resources -= self.cost
+    end
+
+    def choice(choose, user)
+        if choose == "y" && user.resources > self.cost
+            user.resources -= self.cost
             user.save
-            if rand(100) >= event.low_chance_damage
-                puts "You survived #{event.name}"
+            if rand(100) >= self.low_chance_damage
+                puts "You were not affected by #{self.name}."
             else
-                puts "Your wellness dropped by #{event.damage}."
-                user.wellness_score -= event.damage
+                puts "You were affected by #{self.name}."
+                puts "Your wellness dropped by #{self.damage}."
+                user.wellness_score -= self.damage
+                puts "Your wellness stat is now #{user.wellness_score}."
+                user.save
             end
         else
-            if rand(100) >= event.high_chance_damage
-                puts "You survived #{event.name}"
+            if rand(100) >= self.high_chance_damage
+                puts "You were not affected by #{self.name}."
             else
-                puts "Your wellness dropped by #{event.damage}."
-                user.wellness_score -= event.damage
+                puts "You were affected by #{self.name}."
+                puts "Your wellness dropped by #{self.damage}."
+                user.wellness_score -= self.damage
+                puts "Your wellness stat is now #{user.wellness_score}."
+                user.save
             end
+        end
     end
+
+    # def self.gets_choice
+    #     puts "Type Y to continue."
+    #     user_response = gets.chomp
+    #     user_response.downcase!
+    # end
 end
-            # If Yes
-                # Adjust cost based on Event.cost (H1) & adjust wellness based on method (H2)
-            # If No 
-                # Adjust wellness based on method (H3)
-        # If Group 3:
-            # Get user's input if they want medicine to lower the damage rate
-            # If Yes
-                # Adjust cost based on Event.cost (H1) & adjust child status based on method (H4)
-            # If No 
-                # Adjust child status based on method (H5)
-        # If Group 4
-            # User forced to choose "yes" (i.e., you have no choice or ability to lower the chances of the thing happening)        
-            # Adjust resources based on H1
-    ### Helper Methods ###
-    #method H1 : Lower resources based on Event.cost
-    #method H2 : Lower wellness based low_chance_damage outcome
-    #method H3 : Lower wellness based high_chance_damage outcome
-    #method H4 : Determine child boolean based on low_chance_damage
-    #method H5 : Determine child boolean based on high_chance_damage
-    #method H6 : Add child to inventory
-    ### End Helper Methods ###
-  # group 1:
-    # Have child
-  # group 2:
-    # Get sick
-        # Malaria
-        # HIV
-        # Other infection
-  # group 3:
-    # Child gets sick
-        # Malaria
-        # Injury
-        # Other infection
-  # group 4:
-    # Resource damage
-        # Famine
-        # Drought
-        # House Repair
+
