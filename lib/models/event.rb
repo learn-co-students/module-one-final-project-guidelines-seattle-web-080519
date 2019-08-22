@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
     has_many :users, :through => :eventusers
-    attr_accessor :phase_event
+    attr_accessor :phase_event, :users_choice
     ### Helper Methods ###
     ## Grouping Events by Type ##
     def self.group_have_child
@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
     ## END Group Events by Type ##
     ## Get Random Event from Group ##
     def self.new_child
-        self.group_have_child[0]
+        self.group_have_child.sample
     end
     def self.random_user_illness
         self.group_user_sick.sample
@@ -63,20 +63,37 @@ class Event < ActiveRecord::Base
         end
         # @phase_event = self.random_resource_damage
     end
-    # user makes a choice
-    # def eventchoice(event_instance)
-    #         if event_group_sickness.include(event_instance)
-    #                 code clodejlkajdf
-    #         elsif other event group code to make that happenend
-    #         end
+
+    def get_users_child(user)
+        user.children.find_by(alive: true)
+    end
+
     def self.event_choice(user)
         Eventuser.create({user_id: user.id, event_id: @phase_event.id})
+
         if self.group_have_child.include?(@phase_event)
             puts @phase_event.definition
             puts "What would you like to name your baby?"
             child_name = gets.chomp
             child_object = child_name.downcase
             child_object = Child.create(name: child_name, alive: true, user_id: user.id)
+        elsif self.group_child_sick.include?(@phase_event)
+            puts @phase_event.definition
+            s(1)
+            puts "You may purchase medicine for $#{@phase_event.cost}."
+            s(1)
+            puts "You currently have $#{user.resources}."
+            s(1)
+            puts "Without medicine, your child is #{@phase_event.high_chance_damage}% likely to survive."
+            s(1)
+            puts "With medicine, your child is #{@phase_event.low_chance_damage}% likely to survive."
+            s(1)
+            puts "Would you like to purchase the medicine?"
+            s(1)
+            puts "Type Y for Yes or N for No"
+            user_response = gets.chomp
+            user_response = user_response.downcase!
+            @phase_event.choice(user_response, user)
         elsif self.group_user_sick.include?(@phase_event)
             puts @phase_event.definition
             s(1)
@@ -84,9 +101,9 @@ class Event < ActiveRecord::Base
             s(1)
             puts "You currently have $#{user.resources}."
             s(1)
-            puts "Without medicine, your survival rate is #{@phase_event.high_chance_damage}%."
+            puts "Without medicine, your likelihood of having negative health effects is #{@phase_event.high_chance_damage}%."
             s(1)
-            puts "With medicine, your survival rate is #{@phase_event.low_chance_damage}%."
+            puts "With medicine, your likelihood of having negative health effects is #{@phase_event.low_chance_damage}%."
             s(1)
             puts "Would you like to purchase the medicine?"
             s(1)
@@ -108,20 +125,18 @@ class Event < ActiveRecord::Base
     end
 
     def resource_choice(user)
-        users_choice = "NO!"
+        @users_choice = ""
         
-        while users_choice != "y"
+        while @users_choice != "y"
             
             puts "Type Y to continue."
-            users_choice = gets.chomp
-            # users_choice.downcase!
-        #     users_choice = gets_choice
-            # break if users_choice == "y"
+            @users_choice = gets.chomp
         end
         user.resources -= self.cost
     end
 
-    def choice(choose, user)
+    def choice(choice_of_user, user)
+        choose = @users_choice
         if choose == "y" && user.resources > self.cost
             user.resources -= self.cost
             user.save
@@ -134,6 +149,26 @@ class Event < ActiveRecord::Base
                 puts "Your wellness stat is now #{user.wellness_score}."
                 user.save
             end
+        elsif choose == "y" && user.resources > self.cost && self.group_child_sick.include?(@phase_event)
+            user.resources -= self.cost
+            user.save
+            if rand(100) >= self.low_chance_damage
+                puts "Your child survived #{self.name}!"
+            else
+                puts "Your child was greatly affected by #{self.name} and has died."
+                get_users_child(user).alive = false
+                user.save
+                get_users_child(user).save
+            end
+        elsif choose == "n" && self.group_child_sick.include?(@phase_event)
+            if rand(100) >= self.high_chance_damage
+                puts "Your child survived #{self.name}!"
+            else
+                puts "Your child was greatly affected by #{self.name} and has died."
+                get_users_child(user).alive = false
+                user.save
+                get_users_child(user).save
+            end
         else
             if rand(100) >= self.high_chance_damage
                 puts "You were not affected by #{self.name}."
@@ -144,13 +179,8 @@ class Event < ActiveRecord::Base
                 puts "Your wellness stat is now #{user.wellness_score}."
                 user.save
             end
+
         end
     end
-
-    # def self.gets_choice
-    #     puts "Type Y to continue."
-    #     user_response = gets.chomp
-    #     user_response.downcase!
-    # end
 end
 

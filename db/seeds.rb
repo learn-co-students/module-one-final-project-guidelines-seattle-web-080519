@@ -1,19 +1,16 @@
-# create_table "events", force: :cascade do |t|
-    # t.string  "name"
-    # t.string  "definition"
-    # t.integer "cost"
-    # t.integer "low_chance_damage"
-    # t.integer "high_chance_damage"
-    # t.integer "damage"
-    # t.string "event_type"
-#   end
-
-# You were affected by user sick: infection.
-
   # group 1:
-    # Have child
+    # Have girl
         # 2%
-        have_child = Event.create(:name => "have child", :definition => "Congratulations, you have a new baby! Do your best to keep them alive.", :cost => nil, :low_chance_damage => nil, :high_chance_damage => nil, :damage => nil, :event_type => "have child")
+        have_child_g1 = Event.create(:name => "have child", :definition => "Congratulations, you have a new baby girl! Do your best to keep her alive.", :cost => nil, :low_chance_damage => nil, :high_chance_damage => nil, :damage => nil, :event_type => "have child")
+    # Have girl
+        # 2%
+        have_child_g2 = Event.create(:name => "have child", :definition => "Congratulations, you have a new baby girl! Do your best to keep her alive.", :cost => nil, :low_chance_damage => nil, :high_chance_damage => nil, :damage => nil, :event_type => "have child")
+    # Have boy
+        # 2%
+        have_child_b1 = Event.create(:name => "have child", :definition => "Congratulations, you have a new baby boy! Do your best to keep him alive.", :cost => nil, :low_chance_damage => nil, :high_chance_damage => nil, :damage => nil, :event_type => "have child")
+    # Have boy
+        # 2%
+        have_child_b2 = Event.create(:name => "have child", :definition => "Congratulations, you have a new baby boy! Do your best to keep him alive.", :cost => nil, :low_chance_damage => nil, :high_chance_damage => nil, :damage => nil, :event_type => "have child")
   # group 2:
     # Get sick
         # Malaria
