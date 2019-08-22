@@ -7,13 +7,13 @@ class User < ActiveRecord::Base
     #method addsubresources
     def self.create_user(name, dificulty) #uniq usernames
         case dificulty
-        when "hard"
+        when "1"
             new_user = User.create({:phase => 1, :name => name, :wellness_score => rand(50..65), :resources => rand(1..3)})
-        when "average"
+        when "2"
             new_user = User.create({:phase => 1, :name => name, :wellness_score => rand(65..75), :resources => rand(4..15)})
-        when "easy"
+        when "3"
             new_user = User.create({:phase => 1, :name => name, :wellness_score => rand(70..80), :resources => rand(16..31)})
-        when "super easy"
+        when "4"
             new_user = User.create({:phase => 1, :name => name, :wellness_score => rand(75..90), :resources => rand(32..500)})
         else
             "Please enter a valid command: 3, 2, or 1."
@@ -41,28 +41,28 @@ class User < ActiveRecord::Base
             puts "Welcome to your golden years. You are between 41 and 50 years old."
         end
     end
-    def add_sub_resources(dificulty)
+    def add_sub_resources(difficulty)
          #method addsubresources
         case difficulty
-        when "hard"
+        when "1"
             hard_earnings = (rand(1..3) - 1)
             self.resources += hard_earnings
             self.save
             puts "You earned $#{hard_earnings}."
             puts "You lost $1 for living expenses."
-        when "average"
+        when "2"
             average_earnings = (rand(4..15) - 4)
             self.resources += average_earnings
             self.save
             puts "You earned $#{average_earnings}."
             puts "You lost $4 for living expenses."
-        when "easy"
+        when "3"
             easy_earnings = rand(16..31)
             self.resources += (easy_earnings - 16)
             self.save
             puts "You earned $#{easy_earnings}"
             puts "You lost $16 for living expenses."
-        when "super easy"
+        when "4"
             money = (rand(32..500) - 32)
             self.resources += money
             self.save

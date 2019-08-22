@@ -11,11 +11,9 @@ s(1)
 
 puts "How easy will your life be?"
 s(1)
-puts "Select 1 for hard."
-puts "Select 2 for average."
-puts "Select 3 for easy."
+difficulty = dificulty_check
 
-difficulty = gets.chomp
+
 puts "You've chosen #{difficulty}. Let's go!"
 s(1)
 
@@ -32,14 +30,10 @@ puts "The world has four income levels, and you are born into a country on Level
 puts ""
 puts "Most people in your country survive on under $2 a day. As a child, you will walk barefoot to a mudhole to collect water for your family using your single plastic bucket. On your way home you'll gather firewood to heat the gray porridge that you eat at every meal."
 
-print "."
-s(1)
-print "."
-s(1)
-puts "."
-s(1)
+tension
 
     @dead = false
+    # binding.pry
     while new_user.phase < 7 do
         puts "Welcome to phase #{new_user.phase}!"
         s(2)
