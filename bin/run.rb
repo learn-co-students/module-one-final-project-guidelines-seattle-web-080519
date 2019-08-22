@@ -1,15 +1,29 @@
 require_relative '../config/environment'
 
-puts "ARE YOU READY TO BE BORN?"
+puts "Are you ready to be born?"
 s(1)
-puts "how easy is your life goin to be"
-puts "hard"
-puts "average"
-puts "easy"
-dificulty = gets.chomp
-puts dificulty
+print "."
 s(1)
-puts "What is your name?"
+print "."
+s(1)
+puts "."
+s(1)
+
+puts "How easy will your life be?"
+s(1)
+puts "Select 1 for hard."
+puts "Select 2 for average."
+puts "Select 3 for easy."
+
+difficulty = gets.chomp
+puts "You've chosen #{difficulty}. Let's go!"
+s(1)
+
+puts ""
+
+puts "The world has four income levels, and you are born into a country on Level 1. About 1 billion of your fellow humans live on this level; that's 8% of the world's population. Most people in your country survive on under $2 a day. As a child, you will walk barefoot to a mudhole to collect water for your family using your single plastic bucket. On your way home you'll gather firewood to heat the gray porridge that you eat at every meal."
+
+"What is your name?"
 username = gets.chomp.to_s
 puts username
 s(1)
