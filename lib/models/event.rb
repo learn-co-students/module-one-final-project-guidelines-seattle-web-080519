@@ -1,7 +1,6 @@
 class Event < ActiveRecord::Base
     has_many :users
     attr_accessor :phase_event
-    attr_reader :have_child_event, :all_user_sick_events, :all_child_sick_events, :all_resource_damage_events
   
     ### Helper Methods ###
 
@@ -11,7 +10,7 @@ class Event < ActiveRecord::Base
     end
 
     def self.group_user_sick
-        Event.where(event_type: "user sick")
+        Event.where event_type: "user sick"
     end
 
     def self.group_child_sick
@@ -53,40 +52,116 @@ class Event < ActiveRecord::Base
     end
     ## END Get Random Event from Group ##
 
-    ## Get Random Event, but Not Child Illness ##
-    
-    
-    
-    ## END Get Random Event, but Not Child Illness ##
+    def self.user_has_living_child?(user)
+        if user.children.find_by alive: true == true
+            true
+        else
+            false
+        end
+    end
 
     ### END Helper Methods ###
 
-    def self.event_occurs
-        if User.phase == 1
-            self.random_user_illness
-        elsif User.phase.between?(2, 6) #=> true if 2-6
-            if User.all.child.count == false
-                self.random_event_except_sick_kid.sample
+
+
+    # Get an event object based on phase #
+    def self.event_occurs(user)
+        if user.phase == 1
+            @phase_event = self.random_user_illness
+        elsif user.phase.between?(2, 6) #=> true if 2-6
+            if Event.user_has_living_child?(user) == false
+                @phase_event = self.random_event_except_sick_kid
             else
-                Event.all.sample
+                @phase_event = Event.all.sample
             end
         else
             puts "Error: Phase is not within range."
         end
+        @phase_event = self.random_user_illness
     end
 
-    #method: Event happens!
-        # while phase = 1
-            # event = you get sick
+    # user makes a choice
+    
+
+    # def eventchoice(event_instance)
+    #         if event_group_sickness.include(event_instance)
+    #                 code clodejlkajdf
+    #         elsif other event group code to make that happenend
+    #         end
 
 
-        # while phase <= 6 && phase > 1
-            # if child == true (Children.each.alive)
-                # any event can happen
-            # else
-                # any event except child getting sick
-        # result "phase_event" should then be made available to the CLI to ask the user what to do
-    #end
+
+    def self.event_choice(user)
+        if self.group_have_child.include?(@phase_event)
+            puts @phase_event.definition
+            puts "What would you like to name your baby?"
+            child_name = gets.chomp
+            child_object = child_name.downcase
+            child_object = Child.create(name: child_name, alive: true, user_id: user.id)
+        elsif self.group_user_sick.include?(@phase_event)
+            puts @phase_event.definition
+            puts "You may purchase medicine for $#{@phase_event.cost}."
+            puts "You currently have $#{user.resources}"
+            puts "Without medicine, your survival rate is #{@phase_event.high_chance_damage}"
+            puts "With medicine, your survival rate is #{@phase_event.low_chance_damage}%" 
+
+            puts "Would you like to purchase the medicine?"
+            puts "Type Y for Yes or N for No"
+            user_response = gets.chomp
+            user_response = user_response.downcase!
+              
+            if user_response == "y"
+                puts "you put yes"
+                
+            elsif user_response == "n"
+                puts "you put no"
+
+            else
+                puts "Your code is broken within the Event.event_choice(user) method under elsif self.group_user_sick."
+            end
+
+        
+        # elsif self.group_child_sick.include?(@phase_event)
+
+        # elsif self.group_resource_damage.include?(@phase_event)
+
+        else
+            puts "Your event object can't be found; broken within Event class method event_choice."
+        end
+
+
+    end
+
+end
+        # If Group 1
+            # User asked to name child
+            # Create child
+
+
+        # If Group 2:
+            # Get user's input if they want medicine to lower the damage rate
+
+
+            
+            # If Yes
+                # Adjust cost based on Event.cost (H1) & adjust wellness based on method (H2)
+            # If No 
+                # Adjust wellness based on method (H3)
+        # If Group 3:
+            # Get user's input if they want medicine to lower the damage rate
+            # If Yes
+                # Adjust cost based on Event.cost (H1) & adjust child status based on method (H4)
+            # If No 
+                # Adjust child status based on method (H5)
+        # If Group 4
+            # User forced to choose "yes" (i.e., you have no choice or ability to lower the chances of the thing happening)        
+            # Adjust resources based on H1
+                 
+
+
+
+
+
 
     ### Helper Methods ###
 
@@ -101,32 +176,11 @@ class Event < ActiveRecord::Base
 
 
 
-    #method: Make_a_Choice
-
-        # If Group 1 or Group 4
-            # User forced to choose "yes" (i.e., you have no choice or ability to lower the chances of the thing happening)
-            
-            # If Group 1
-                # Add child to inventory
-            # If Group 4
-                # Adjust resources based on H1
-        # If Group 2:
-            # Get user's input if they want medicine to lower the damage rate
-            # If Yes
-                # Adjust cost based on Event.cost (H1) & adjust wellness based on method (H2)
-            # If No 
-                # Adjust wellness based on method (H3)
-        # If Group 3:
-            # Get user's input if they want medicine to lower the damage rate
-            # If Yes
-                # Adjust cost based on Event.cost (H1) & adjust child status based on method (H4)
-            # If No 
-                # Adjust child status based on method (H5)
 
 
 
 
-end
+
   # group 1:
     # Have child
   # group 2:
