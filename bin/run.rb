@@ -2,10 +2,10 @@ require_relative '../config/environment'
 
 puts "ARE YOU READY TO BE BORN?"
 s(1)
-puts "how easy is your life goin to be"
-puts "hard"
-puts "average"
-puts "easy"
+puts "How easy will your life be?"
+puts "Select 1 for hard."
+puts "Select 2 for average."
+puts "Select 3 for easy."
 dificulty = gets.chomp
 puts dificulty
 s(1)
