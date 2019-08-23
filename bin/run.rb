@@ -7,15 +7,15 @@ puts ""
 
 puts "ARE YOU READY TO BE BORN?"
 puts ""
-s(1)
+# s(1)
 
 puts "How easy will your life be?"
-s(1)
+# s(1)
 difficulty = dificulty_check
 
 
 puts "You've chosen #{difficulty}. Let's go!"
-s(1)
+# s(1)
 
 puts ""
 
@@ -24,7 +24,7 @@ username = gets.chomp.to_s
 puts ""
 puts "Welcome to the world, #{username}!"
 new_user = User.create_user(username, difficulty) #take out username crzy characters
-s(1)
+# s(1)
 
 # print "The world has four income levels, and you are born into a country on Level 1. "
 # s(1)
@@ -43,21 +43,21 @@ s(1)
 # s(1)
 # puts "On your way home you'll gather firewood to heat the gray porridge that you eat at every meal. "
 
-tension
+# tension
 
     @dead = false
     # binding.pry
     while new_user.phase < 7 do
         puts "Welcome to phase #{new_user.phase}!"
-        s(2)
+        # s(2)
         new_user.age_range
-        s(2)
+        # s(2)
         new_user.status_report
-        s(2)
+        # s(2)
         do_you_want_to_continue if new_user.phase >= 2
         break if @dead == true
         new_user.add_sub_resources(difficulty)
-        s(1)
+        # s(1)
         Event.event_occurs(new_user)
         Event.event_choice(new_user)
         survived_phase(new_user)
